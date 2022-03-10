@@ -94,7 +94,7 @@ Function New-LegacySelfSignedCert
 
     $hostnonFQDN = $env:computerName
     $hostFQDN = [System.Net.Dns]::GetHostByName(($env:computerName)).Hostname
-    $SignatureAlgorithm = "SHA512"
+    $SignatureAlgorithm = "SHA384"
 
     $name = New-Object -COM "X509Enrollment.CX500DistinguishedName.1"
     $name.Encode("CN=$SubjectName", 0)
