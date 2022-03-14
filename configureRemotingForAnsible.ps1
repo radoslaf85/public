@@ -40,6 +40,7 @@
 # Updated by Jordan Borean <jborean93@gmail.com>
 # Updated by Erwan Quélin <erwan.quelin@gmail.com>
 # Updated by David Norman <david@dkn.email>
+# Updated by Radek Figurny <radek.figurny@tietoevry.com>
 #
 # Version 1.0 - 2014-07-06
 # Version 1.1 - 2014-11-11
@@ -50,6 +51,7 @@
 # Version 1.6 - 2017-04-18
 # Version 1.7 - 2017-11-23
 # Version 1.8 - 2018-02-23
+# Version 1.9 - 2022-03-14
 
 # Support -Verbose option
 [CmdletBinding()]
@@ -57,12 +59,12 @@
 Param (
     [string]$SubjectName = $env:COMPUTERNAME,
     [int]$CertValidityDays = 1095,
-    [switch]$SkipNetworkProfileCheck,
-    [switch]$CreateSelfSignedCert,
-    [switch]$ForceNewSSLCert = $false,
-    [switch]$GlobalHttpFirewallAccess,
-    [switch]$DisableBasicAuth = $false,
-    [switch]$EnableCredSSP
+    [bool]$SkipNetworkProfileCheck = $false,
+    [bool]$CreateSelfSignedCert = $true,
+    [bool]$ForceNewSSLCert = $false,
+    [bool]$GlobalHttpFirewallAccess = $true,
+    [bool]$DisableBasicAuth = $false,
+    [bool]$EnableCredSSP = $true
 )
 
 Function Write-Log
