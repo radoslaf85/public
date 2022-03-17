@@ -64,7 +64,8 @@ Param (
     [bool]$ForceNewSSLCert = $false,
     [bool]$GlobalHttpFirewallAccess = $true,
     [bool]$DisableBasicAuth = $false,
-    [bool]$EnableCredSSP = $true
+    [bool]$EnableCredSSP = $true,
+    [bool]$EnableExtraWSManConfig = $true
 )
 
 Function Write-Log
@@ -218,6 +219,10 @@ Function Enable-GlobalHttpFirewallAccess
     Write-Verbose "HTTP firewall rule $($rule.Name) updated"
 }
 
+function Add-ExtraWSManSettings {
+    Set-Item -Path WSMan:\localhost\MaxEnvelopeSizeKb -Value 16384
+}
+
 # Setup error handling.
 Trap
 {
@@ -351,6 +356,8 @@ Else
 # Check for basic authentication.
 $basicAuthSetting = Get-ChildItem WSMan:\localhost\Service\Auth | Where-Object {$_.Name -eq "Basic"}
 
+
+
 If ($DisableBasicAuth)
 {
     If (($basicAuthSetting.Value) -eq $true)
@@ -393,6 +400,10 @@ If ($EnableCredSSP)
 
 If ($GlobalHttpFirewallAccess) {
     Enable-GlobalHttpFirewallAccess
+}
+
+If ($EnableExtraWSManConfig) {
+    Add-ExtraWSManSettings
 }
 
 # Test a remoting connection to localhost, which should work.
