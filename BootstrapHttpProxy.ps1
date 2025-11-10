@@ -36,8 +36,8 @@ Start-Transcript "$tempDir\Bootstrap.log"
 $ErrorActionPreference = "SilentlyContinue"
 
 # Downloading GitHub artifacts
-Invoke-WebRequest ("https://raw.githubusercontent.com/radoslaf85/public/refs/heads/main/LogonScript.ps1") -OutFile "$tempDir\LogonScriptHttpProxy.ps1" -Proxy $env:HTTPS_PROXY
-Invoke-WebRequest "https://raw.githubusercontent.com/Azure/arc_jumpstart_docs/main/img/wallpaper/jumpstart_wallpaper_dark.png" -OutFile "$tempDir\wallpaper.png" -Proxy $env:HTTPS_PROXY
+Invoke-WebRequest ("https://raw.githubusercontent.com/radoslaf85/public/refs/heads/main/LogonScript.ps1") -OutFile "$tempDir\LogonScriptHttpProxy.ps1" -Proxy $httpProxyServer
+Invoke-WebRequest "https://raw.githubusercontent.com/Azure/arc_jumpstart_docs/main/img/wallpaper/jumpstart_wallpaper_dark.png" -OutFile "$tempDir\wallpaper.png" -Proxy $httpProxyServer
 
 # Installing tools
 workflow ClientTools_01
@@ -67,7 +67,7 @@ workflow ClientTools_01
                             foreach ($app in $appsToInstall)
                             {
                                 Write-Host "Installing $app"
-                                & choco install $app /y -Force --proxy=$env:HTTPS_PROXY | Write-Output
+                                & choco install $app /y -Force --proxy=$httpProxyServer | Write-Output
                             }
                         }
                     }
@@ -110,4 +110,5 @@ Get-ScheduledTask -TaskName ServerManager | Disable-ScheduledTask
 # Clean up Bootstrap.log
 Stop-Transcript
 $logSuppress = Get-Content $tempDir\Bootstrap.log | Where-Object { $_ -notmatch "Host Application: powershell.exe" }
+
 $logSuppress | Set-Content $tempDir\Bootstrap.log -Force
