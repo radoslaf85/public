@@ -67,7 +67,7 @@ workflow ClientTools_01
                             foreach ($app in $appsToInstall)
                             {
                                 Write-Host "Installing $app"
-                                & choco install $app /y -Force --proxy=$httpProxyServer | Write-Output
+                                & choco install $app /y --Force --proxy=$httpProxyServer | Write-Output
                             }
                         }
                     }
@@ -101,7 +101,7 @@ New-ItemProperty -Path $RegistryPath -Name $Name -Value $Value -PropertyType DWO
 
 # Creating scheduled task for LogonScript.ps1
 $Trigger = New-ScheduledTaskTrigger -AtLogOn
-$Action = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument '$tempDir\LogonScript.ps1'
+$Action = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "$tempDir\LogonScript.ps1"
 Register-ScheduledTask -TaskName "LogonScript" -Trigger $Trigger -User $adminUsername -Action $Action -RunLevel "Highest" -Force
 
 # Disabling Windows Server Manager Scheduled Task
@@ -110,6 +110,4 @@ Get-ScheduledTask -TaskName ServerManager | Disable-ScheduledTask
 # Clean up Bootstrap.log
 Stop-Transcript
 $logSuppress = Get-Content $tempDir\Bootstrap.log | Where-Object { $_ -notmatch "Host Application: powershell.exe" }
-
 $logSuppress | Set-Content $tempDir\Bootstrap.log -Force
-
