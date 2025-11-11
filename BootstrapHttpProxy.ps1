@@ -108,7 +108,7 @@ Register-ScheduledTask -TaskName "LogonScript" -Trigger $Trigger -User $adminUse
 Get-ScheduledTask -TaskName ServerManager | Disable-ScheduledTask
 
 # Download and Install certificates
-Invoke-WebRequest "https://download.microsoft.com/download/2/4/8/248D8A62-FCCD-475C-85E7-6ED59520FC0F/MicrosoftRootCertificateAuthority2011.cer -OutFile" "$tempDir\MicrosoftRootCertificateAuthority2011.cer" -Proxy $httpProxyServer
+Invoke-WebRequest "https://download.microsoft.com/download/2/4/8/248D8A62-FCCD-475C-85E7-6ED59520FC0F/MicrosoftRootCertificateAuthority2011.cer" -OutFile "$tempDir\MicrosoftRootCertificateAuthority2011.cer" -Proxy $httpProxyServer
 Invoke-WebRequest "https://www.microsoft.com/pkiops/certs/MicCodSigPCA2011_2011-07-08.crt" -OutFile "$tempDir\MicCodSigPCA2011_2011-07-08.crt" -Proxy $httpProxyServer
 
 certutil.exe -addstore -f "AuthRoot" "$tempDir\MicrosoftRootCertificateAuthority2011.cer"
@@ -118,4 +118,5 @@ certutil.exe -addstore -f "CA" "$tempDir\MicCodSigPCA2011_2011-07-08.crt"
 Stop-Transcript
 $logSuppress = Get-Content $tempDir\Bootstrap.log | Where-Object { $_ -notmatch "Host Application: powershell.exe" }
 $logSuppress | Set-Content $tempDir\Bootstrap.log -Force
+
 
