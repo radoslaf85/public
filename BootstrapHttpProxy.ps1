@@ -67,7 +67,7 @@ workflow ClientTools_01
                             foreach ($app in $appsToInstall)
                             {
                                 Write-Host "Installing $app"
-                                & choco install $app /y --Force --proxy=$httpProxyServer | Write-Output
+                                & choco install $app /y --Force --proxy="http://ratelimit.pe.tieto.com:8888" | Write-Output
                             }
                         }
                     }
@@ -118,5 +118,6 @@ certutil.exe -addstore -f "CA" "$tempDir\MicCodSigPCA2011_2011-07-08.crt"
 Stop-Transcript
 $logSuppress = Get-Content $tempDir\Bootstrap.log | Where-Object { $_ -notmatch "Host Application: powershell.exe" }
 $logSuppress | Set-Content $tempDir\Bootstrap.log -Force
+
 
 
