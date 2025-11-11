@@ -79,7 +79,7 @@ if ($env:windowsNode -eq $true) {
         "NetworkPlugin": "$networkplugin",
         "InternetDisabled": true,
         "Proxy": {
-            "Http": $httpProxyServer
+            "Http": "$httpProxyServer"
         }
     },
     "User": {
@@ -113,9 +113,9 @@ else {
     },
     "Network": {
         "NetworkPlugin": "$networkplugin",
-        "InternetDisabled": false
+        "InternetDisabled": true,
         "Proxy": {
-            "Http": $httpProxyServer
+            "Http": "$httpProxyServer"
         }
     },
     "User": {
