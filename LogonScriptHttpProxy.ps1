@@ -73,14 +73,15 @@ if ($env:windowsNode -eq $true) {
     "Version": "$versionAksEdgeConfig",
     "DeploymentType": "SingleMachineCluster",
     "Init": {
-        "ServiceIPRangeSize": 0
+        "ServiceIPRangeSize": 10
     },
     "Network": {
         "NetworkPlugin": "$networkplugin",
         "InternetDisabled": true,
         "Proxy": {
-            "Http": "$httpProxyServer"
-        }
+            "Http": "http://nolimit.pe.tieto.com:9999"
+        },
+		"DnsServers": "10.222.32.4"
     },
     "User": {
         "AcceptEula": true,
@@ -109,14 +110,15 @@ else {
     "Version": "$versionAksEdgeConfig",
     "DeploymentType": "SingleMachineCluster",
     "Init": {
-        "ServiceIPRangeSize": 0
+        "ServiceIPRangeSize": 10
     },
     "Network": {
         "NetworkPlugin": "$networkplugin",
         "InternetDisabled": true,
         "Proxy": {
-            "Http": "$httpProxyServer"
-        }
+            "Http": "http://nolimit.pe.tieto.com:9999"
+        },
+		"DnsServers": "10.222.32.4"
     },
     "User": {
         "AcceptEula": true,
